@@ -1,0 +1,55 @@
+<script>
+  import { goto, stores } from "@sapper/app";
+  import { Adapter, TokenManager } from "../utils";
+
+  const { session } = stores();
+
+  let email;
+  let password;
+  let confirmPassword;
+  let error;
+  let loading = false;
+
+  const handleSubmit = async () => {
+    if (password !== confirmPassword) {
+      return alert("Passwords do not match.");
+    }
+    loading = true;
+    const res = await Adapter.signup(email, password);
+
+    if (res instanceof Error) {
+      error = error.message;
+      return;
+    }
+
+    session.set({ token: res.token });
+    TokenManager.setToken(res.token);
+    goto("/");
+  };
+</script>
+
+<form method="post" on:submit|preventDefault={handleSubmit}>
+  <label>
+    Email
+    <input name="email" bind:value={email} />
+  </label>
+  <br />
+  <label>
+    Password
+    <input name="password" type="password" bind:value={password} />
+  </label>
+  <br />
+  <label>
+    Confirm Password
+    <input
+      name="password-confirmation"
+      type="password"
+      bind:value={confirmPassword} />
+  </label>
+  <br />
+  <button>Submit</button>
+</form>
+
+{#if loading}
+  <p>creating account...</p>
+{/if}
