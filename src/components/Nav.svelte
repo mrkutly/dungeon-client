@@ -20,7 +20,10 @@
       </li>
     {:else}
       <li>
-        <a class:selected={segment === 'characters'} href="/characters">
+        <a
+          class:selected={segment === 'characters'}
+          rel="prefetch"
+          href="/characters">
           characters
         </a>
       </li>

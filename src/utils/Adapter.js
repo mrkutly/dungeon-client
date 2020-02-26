@@ -44,9 +44,9 @@ export default {
     }
   },
 
-  async getCharacters(token) {
+  async getCharacters(token, fetchFn) {
     try {
-      const res = await fetch(`${BACKEND_URL}characters`, {
+      const res = await fetchFn(`${BACKEND_URL}characters`, {
         method: 'GET',
         headers: {
           ...headers,

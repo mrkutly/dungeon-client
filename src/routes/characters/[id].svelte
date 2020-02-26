@@ -7,6 +7,10 @@
     const authorization = session.token;
     let character;
 
+    if (!authorization) {
+      this.redirect(302, "login");
+    }
+
     if (authorization) {
       const response = await this.fetch(`${BACKEND_URL}characters/${id}`, {
         method: "GET",
@@ -18,6 +22,11 @@
       });
 
       const parsed = await response.json();
+
+      if (parsed.error) {
+        this.error(response.status, parsed.error);
+      }
+
       character = parsed.character;
     }
 
