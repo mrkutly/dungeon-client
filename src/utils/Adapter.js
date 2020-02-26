@@ -27,18 +27,18 @@ export default {
   
   async login(email, password) {
     try {
-      const res = await fetch(`${BACKEND_URL}login`, {
+      const res = await fetch("/login", {
         method: 'POST',
         headers,
-        body: JSON.stringify({ email, password})
-      })
-      const parsed = await res.json();
+        body: JSON.stringify({ email, password }),
+      });
       
-      if(typeof parsed.error !== 'undefined') {
-        throw new Error(parsed.error);
+      if (res.status !== 200) {
+        throw new Error('Failed to login.');
       }
-
-      return parsed;
+      
+      const token = await res.text();
+      return token;
     } catch (error) {
       return error;
     }

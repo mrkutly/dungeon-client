@@ -1,16 +1,16 @@
 <script>
   import Nav from "../components/Nav.svelte";
-  import AutoLogin from "../components/AutoLogin.svelte";
+  import LoginOnLoad from "../components/LoginOnLoad.svelte";
   export let segment;
 </script>
 
-<AutoLogin>
+<LoginOnLoad>
   <Nav {segment} />
 
   <main>
     <slot />
   </main>
-</AutoLogin>
+</LoginOnLoad>
 
 <style>
   main {

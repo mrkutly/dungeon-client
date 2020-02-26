@@ -1,6 +1,7 @@
 import sirv from 'sirv';
 import polka from 'polka';
 import compression from 'compression';
+import { json } from 'body-parser';
 import session from 'express-session';
 import sessionFileStore from 'session-file-store';
 import * as sapper from '@sapper/server';
@@ -16,9 +17,10 @@ PORT = PORT || 3001;
 const FileStore = new sessionFileStore(session);
 
 polka() // You can also use Express
+	.use(json())
 	.use(session({
 		secret: process.env.SECRET,
-		resave: false,
+		resave: true,
 		saveUninitialized: true,
 		cookie: {
 			maxAge: 31536000
@@ -31,9 +33,10 @@ polka() // You can also use Express
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
 		sapper.middleware({
-			session: (req, res) => ({
-				token: req.session.token
-			})
+			session: (req, res) => {
+				return ({
+					token: req.session.token
+				})}
 		})
 	)
 	.listen(PORT, err => {

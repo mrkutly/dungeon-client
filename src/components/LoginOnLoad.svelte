@@ -11,7 +11,7 @@
       let token = TokenManager.getToken();
 
       if (token !== null) {
-        $session.token = token;
+        session.set({ token });
       }
     }
   });

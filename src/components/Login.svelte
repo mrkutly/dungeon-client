@@ -11,18 +11,14 @@
   const handleSubmit = async () => {
     loading = true;
     error = null;
-    const res = await Adapter.login(email, password);
+    const tokenResponse = await Adapter.login(email, password);
 
-    if (res instanceof Error) {
-      error = res.message;
-      loading = false;
-      return;
+    if (tokenResponse instanceof Error) {
+      error = tokenResponse.message;
+    } else {
+      $session.token = tokenResponse;
+      goto("/");
     }
-
-    loading = false;
-    session.set({ token: res.token });
-    TokenManager.setToken(res.token);
-    goto("/");
   };
 </script>
 
