@@ -1,6 +1,6 @@
 <script>
   import { goto, stores } from "@sapper/app";
-  import { Adapter, TokenManager } from "../utils";
+  import { login, TokenManager } from "../utils";
 
   const { session } = stores();
   let email;
@@ -11,12 +11,12 @@
   const handleSubmit = async () => {
     loading = true;
     error = null;
-    const tokenResponse = await Adapter.login(email, password);
+    const response = await login(email, password);
 
-    if (tokenResponse instanceof Error) {
-      error = tokenResponse.message;
+    if (response instanceof Error) {
+      error = response.message;
     } else {
-      $session.token = tokenResponse;
+      $session.token = response.token;
       goto("/");
     }
   };

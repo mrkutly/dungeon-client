@@ -1,5 +1,5 @@
 <script context="module">
-  import { Adapter } from "../../utils";
+  import { get } from "../../utils/fetches.js";
 
   export async function preload(page, session) {
     const { token } = session;
@@ -10,13 +10,13 @@
         return;
       }
 
-      const characters = await Adapter.getCharacters(token, this.fetch);
+      const response = await get("characters", token, this);
 
-      if (characters instanceof Error) {
-        throw characters;
+      if (response.error) {
+        this.error(400, response.error);
       }
 
-      return { characters };
+      return { characters: response.characters };
     } catch (error) {
       this.error(404, error.message);
     }

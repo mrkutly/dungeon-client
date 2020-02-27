@@ -1,6 +1,6 @@
 <script>
   import { goto, stores } from "@sapper/app";
-  import { Adapter, TokenManager } from "../utils";
+  import { signup, TokenManager } from "../utils";
 
   const { session } = stores();
 
@@ -15,15 +15,16 @@
       return alert("Passwords do not match.");
     }
     loading = true;
-    const res = await Adapter.signup(email, password);
+    const response = await signup(email, password);
 
-    if (res instanceof Error) {
-      error = error.message;
+    if (response instanceof Error) {
+      error = response.message;
+      loading = false;
       return;
     }
 
-    session.set({ token: res.token });
-    TokenManager.setToken(res.token);
+    session.set({ token: response.token });
+    TokenManager.setToken(response.token);
     goto("/");
   };
 </script>
@@ -52,4 +53,8 @@
 
 {#if loading}
   <p>creating account...</p>
+{/if}
+
+{#if error}
+  <p>{error}</p>
 {/if}

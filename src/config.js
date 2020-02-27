@@ -1,5 +1,5 @@
 const dev = {
-  BACKEND_URL: 'https://dungeon-api-staging.herokuapp.com/api/v1/',
+  BACKEND_URL: 'http://localhost:3000/api/v1/',
 }
 
 const prod = {
