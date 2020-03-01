@@ -11,8 +11,10 @@
   let loading = false;
 
   const handleSubmit = async () => {
+    error = null;
+
     if (password !== confirmPassword) {
-      return alert("Passwords do not match.");
+      error = "Passwords do not match.";
     }
     loading = true;
     const response = await signup(email, password);
@@ -32,7 +34,7 @@
 <form method="post" on:submit|preventDefault={handleSubmit}>
   <label>
     Email
-    <input name="email" bind:value={email} />
+    <input name="email" type="email" bind:value={email} />
   </label>
   <br />
   <label>
@@ -48,7 +50,7 @@
       bind:value={confirmPassword} />
   </label>
   <br />
-  <button>Submit</button>
+  <button type="submit">Submit</button>
 </form>
 
 {#if loading}

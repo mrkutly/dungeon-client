@@ -13,9 +13,6 @@
     </li>
     {#if !loggedIn}
       <li>
-        <a class:selected={segment === 'signup'} href="/signup">signup</a>
-      </li>
-      <li>
         <a class:selected={segment === 'login'} href="/login">login</a>
       </li>
     {:else}
@@ -36,7 +33,7 @@
 
 <style>
   nav {
-    border-bottom: 1px solid rgba(255, 62, 0, 0.1);
+    border-bottom: 1px solid var(--light-accent);
     font-weight: 300;
     padding: 0 1em;
   }
@@ -68,7 +65,7 @@
     content: "";
     width: calc(100% - 1em);
     height: 2px;
-    background-color: rgb(167, 101, 187);
+    background-color: var(--accent-color);
     display: block;
     bottom: -1px;
   }

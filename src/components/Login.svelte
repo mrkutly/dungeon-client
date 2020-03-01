@@ -15,6 +15,7 @@
 
     if (response instanceof Error) {
       error = response.message;
+      loading = false;
     } else {
       $session.token = response.token;
       goto("/");
@@ -25,7 +26,7 @@
 <form method="post" on:submit|preventDefault={handleSubmit}>
   <label>
     Email
-    <input name="email" bind:value={email} />
+    <input name="email" type="email" bind:value={email} />
   </label>
   <br />
   <label>
@@ -33,7 +34,7 @@
     <input name="password" type="password" bind:value={password} />
   </label>
   <br />
-  <button>Submit</button>
+  <button type="submit">Submit</button>
 </form>
 
 {#if loading}
